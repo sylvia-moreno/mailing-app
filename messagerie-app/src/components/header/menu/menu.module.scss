@@ -1,0 +1,32 @@
+.container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  display: block;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+
+select {
+  height: 100%;
+  width: 100%;
+  background-color: #124080;
+  border: none;
+  color: #fff;
+  margin-left: 20px;
+}
+
+.a11yVisibility {
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+

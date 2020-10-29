@@ -1,0 +1,58 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  flex: 0 1 100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  @media screen and (min-width: 1024px) {
+    flex: 1;
+  }
+}
+
+.unRead {
+  color: #696969;
+}
+
+.item {
+  border: none;
+  border-bottom: 1px solid #ccc;
+  background: #fff;
+  padding: 15px 10px;
+}
+
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  margin: 0 0 0 10px;
+  font-size: 18px;
+}
+
+
+.unRead {
+  color: #696969;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+}
+
+.textContainer {
+  text-align: left;
+  margin-left: 39px;
+}
+
+.textSubject {
+  color: #000;
+  margin-bottom: 0;
+}
+
+.textBody {
+  color: #888686;
+  margin-top: 5px;
+}

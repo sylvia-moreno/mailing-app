@@ -1,0 +1,23 @@
+.messagesContainer {
+  display: flex;
+  position: relative;
+
+}
+
+.messageDetails {
+  width: 0;
+  height: 100%;
+  @media screen and (min-width: 1024px) {
+    flex: 0 0 auto;
+  }
+}
+
+.isNotCollapse {
+  flex: 1
+}
+
+.defaultDisplay {
+  @media screen and (min-width: 1024px) {
+    flex: 50%;
+  }
+}

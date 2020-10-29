@@ -1,0 +1,6 @@
+black
+flake8-isort
+flask
+flask-cors
+flask-smorest
+pdbpp

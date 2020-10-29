@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.left {
+  background-color: #1b5098;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 0 1 100%;
+  padding-left: 15px;
+}
+
+.rigth {
+  border-left: 1px solid #fff;
+  background-color: #124080;
+  flex: 0 0 auto;
+  align-items: center;
+  display: flex;
+  padding: 10px;
+}

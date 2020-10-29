@@ -1,0 +1,31 @@
+.container {
+  width: 0;
+  height: 100%;
+  border: none;
+  background: #ebebeb;
+  border-bottom: 1px solid #ccc;
+  padding: 20px;
+
+  @media screen and (min-width: 1024px) {
+    flex: 0 0 auto;
+  }
+}
+
+.collapse {
+  position: absolute;
+  top: 0;
+  width: auto;
+  @media screen and (min-width: 1024px) {
+    position: relative;
+  }
+}
+
+.subContainer {
+  background: #fff;
+  border-radius: 6px;
+  padding: 10px;
+}
+
+.header {
+  margin-bottom: 20px;
+}

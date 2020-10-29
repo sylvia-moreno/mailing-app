@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  align-items: center;
+  border: none;
+  background: #7ed321;
+  height: 35px;
+  width: 60px;
+  border-radius: 10px;
+  color: #fff;
+  margin-left: 20px;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.unRead {
+  background: #ccc;
+}
+
+.a11yVisibility {
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
