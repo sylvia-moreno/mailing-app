@@ -70,11 +70,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
 ## RAF
-- routing urls : messages par utilisateurs 
-- vue desktop
-- css
-- optimisation accessibilité : sémantique de la page à revoir
-- créer un store Redux pour centraliser les états et MAJ des composants
+- infinite scroll
 - tests
-- gestion de la date
-- pagination

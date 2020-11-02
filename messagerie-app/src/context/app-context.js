@@ -38,7 +38,6 @@ function reducer(state, action) {
             };
         }
         case 'UPDATE_MESSAGE': {
-            debugger
             return {
                 ...state,
                 updateMessage: {...action.payload, read: true},

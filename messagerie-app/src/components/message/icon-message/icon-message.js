@@ -7,7 +7,7 @@ const IconMessage = ({ type, unread }) => {
     return (
         <span
             aria-hidden="true"
-            className={cx(styles.messageIcon, {[styles.unreadIco]: unread})}
+            className={cx(styles.messageIcon, {[styles.unreadIco]: unread}, {[styles.inboxIcon]: iconType === 'inbox'})}
         >
             <i className={`mypro-icon mypro-icon-${iconType}`}></i>
         </span>

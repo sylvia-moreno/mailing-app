@@ -37,7 +37,6 @@ const MailingBox = () => {
                     type: 'GET_REALTOR',
                     payload: response,
                 });
-                debugger
             })
             .catch(error => {
                 console.log('error: ', error)
@@ -104,10 +103,17 @@ const MailingBox = () => {
         history.push('/')
         history.push(`${realtorId}/messages/${e.currentTarget.id}`)
         const messageDetails = state.messages.find(msg => msg.id === Number(e.currentTarget.id));
-        const updateUnReadMessages = !messageDetails.read ? {...state.realtor, unread_messages: state.realtor.unread_messages - 1} : {...state.realtor};
+        const updateRealtor = !messageDetails.read ? {...state.realtor, unread_messages: state.realtor.unread_messages - 1} : {...state.realtor};
+
+        const unReadMsg = !messageDetails.read ? {...state.realtor, unread_messages: state.realtor.unread_messages - 1} : {...state.realtor}
+        dispatch({
+            type: 'UPDATE_COUNTER',
+            payload: unReadMsg.unread_messages
+        })
+
         dispatch({
             type: 'GET_REALTOR',
-            payload: updateUnReadMessages,
+            payload: updateRealtor,
         });
         getMessage(e.currentTarget.id);
         setCurrentMessage(e.currentTarget.id);

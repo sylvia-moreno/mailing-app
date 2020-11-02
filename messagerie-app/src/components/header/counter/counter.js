@@ -8,11 +8,11 @@ interface CounterPropsType {
     nbOfMessages: number
 }
 const Counter = ({nbOfMessages}: CounterPropsType) => (
-    <button className={cx(styles.container, {[styles.unRead]: nbOfMessages <= 0})}>
+    <div className={cx(styles.container, {[styles.unRead]: nbOfMessages <= 0})} tabIndex="0">
         <IconMessage type="inbox" isRead={false} />
         <span className={styles.a11yVisibility}>Messages reçus</span>
         {nbOfMessages}
-    </button>
+    </div>
 )
 
 export default Counter

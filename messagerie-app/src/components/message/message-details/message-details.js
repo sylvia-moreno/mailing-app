@@ -15,7 +15,7 @@ const MessageDetails = ({message, onClose, isCollapse}) => {
     } = message;
     const textDateDay = moment(date).format('DD MMMM');
     const textDateHours = moment(date).format('HH:mm');
-
+    
     return (
         <main role="main" className={cx(styles.container, {[styles.collapse]: isCollapse })}>
             <article>
@@ -30,7 +30,7 @@ const MessageDetails = ({message, onClose, isCollapse}) => {
                 <header className={cx(styles.subContainer, styles.header)}>
                     <div className={styles.flexRow}>
                         <span className={styles.icon}>
-                            <IconMessage type={type} unread={read}/>
+                            <IconMessage type={type} unread={!read}/>
                         </span>
                         <h2 className={styles.nameHeader}>{contact.firstname} {contact.lastname}</h2>
                     </div>
