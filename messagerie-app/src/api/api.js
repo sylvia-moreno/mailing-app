@@ -26,8 +26,8 @@ const getRealtorMessage = async (realtorId, messageId) => {
 };
 
 const updateRealtorMessage = async (realtorId, messageId) => {
-    const response = await axios.patch(`${baseUrl}/${realtorId}/messages/${messageId}`);
-    return response.data;
+    const response = await axios.patch(`${baseUrl}/${realtorId}/messages/${messageId}`)
+    return {...response.data, read: true};
 };
 
 export default {

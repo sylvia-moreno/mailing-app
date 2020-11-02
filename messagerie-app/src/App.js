@@ -20,6 +20,11 @@ const App = () => {
                   path='/:realtorId'
                   component={MailingBox}
               />
+              <Route
+                  exact
+                  path='/:realtorId/messages/:messageId'
+                  component={MailingBox}
+              />
           </Switch>
       </Fragment>
   );

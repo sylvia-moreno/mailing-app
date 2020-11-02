@@ -1,16 +1,17 @@
-import React, {MouseEventHandler} from 'react'
+import React, {MouseEventHandler, useContext} from 'react'
 
-import styles from './menu.module.scss'
+import styles from './navigation.module.scss'
+import {AppContext} from "../../../context/app-context";
 
-interface MenuPropsType {
-    realtors: string[],
-    realtor: string[],
-    onChange(): MouseEventHandler
-}
+const Navigation = ({realtors, realtor, onChange, history}) => {
+    const [state] = useContext(AppContext);
+    const defaultOptionSelected = state.location.realtorId
 
-const Menu = ({realtors, realtor, onChange}: MenuPropsType) => {
     const onRealtorChange = e => {
-        onChange(e.target.value);
+        const value = e.target.value;
+        onChange(defaultOptionSelected);
+        history.push('/')
+        history.push(`${value}/`)
     };
 
     const realtorList = realtors.map(realtor => {
@@ -22,7 +23,7 @@ const Menu = ({realtors, realtor, onChange}: MenuPropsType) => {
     });
 
     return (
-        <div className={styles.container}>
+        <nav className={styles.container} role="navigation">
             <div className={styles.logoContainer}>
                 <img className={styles.logo} src={`${realtor.logo}`} alt="logo agence"/>
             </div>
@@ -30,11 +31,12 @@ const Menu = ({realtors, realtor, onChange}: MenuPropsType) => {
             <select
                 id="menu-realtors"
                 onChange={onRealtorChange}
+                defaultValue={defaultOptionSelected}
             >
                 {realtorList}
             </select>
-        </div>
+        </nav>
     )
 }
 
-export default Menu
+export default Navigation

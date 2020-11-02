@@ -1,27 +1,30 @@
-import React, {Fragment, useEffect, useState} from 'react'
-import {useParams} from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react'
+import { useParams, useHistory } from 'react-router-dom';
+import { AppContext } from '../../context/app-context';
 
+import api from "../../api/api";
 import Header from '../header/header';
 import MessagesList from '../message/messages-list/messages-list';
 import MessageDetails from '../message/message-details/message-details';
-import api from "../../api/api";
 
 import styles from './mailing-box.module.scss';
-import Services from "../../api/api";
 
 const MailingBox = () => {
     let { realtorId }  = useParams();
-
-    const [realtors, setRealtors] = useState([])
-    const [realtor, setRealtor] = useState({});
-    const [messages, setMessages] = useState([]);
-    const [messageDetail, setMessageDetail] = useState(null)
+    let { messageId }  = useParams();
+    const history = useHistory();
+    const [state, dispatch] = useContext(AppContext);
+    const [messageDetails, setMessageDetail] = useState(null)
     const [currentMessage, setCurrentMessage] = useState(null)
+    const [isMessageDetailsVisible, setIsMessageDetailsVisible] = useState(false)
 
     const getAllRealtors = () => {
-        Services.getAllRealtors()
+        api.getAllRealtors()
             .then(response => {
-                setRealtors(response)
+                dispatch({
+                    type: 'GET_REALTORS',
+                    payload: response,
+                });
             })
             .catch(error => {
                 console.log('error: ', error)
@@ -30,7 +33,11 @@ const MailingBox = () => {
     const getARealtor = () => {
         api.getARealtor(realtorId)
             .then(response => {
-                setRealtor(response)
+                dispatch({
+                    type: 'GET_REALTOR',
+                    payload: response,
+                });
+                debugger
             })
             .catch(error => {
                 console.log('error: ', error)
@@ -39,66 +46,106 @@ const MailingBox = () => {
     const getAllMessages = () => {
         api.getAllMessages(realtorId)
             .then(response => {
-                setMessages(response)
+                dispatch({
+                    type: 'GET_MESSAGES',
+                    payload: response,
+                });
             })
             .catch(error => {
                 console.log('error: ', error)
             })
     }
+    const updateMessageStatus = (messageId) => {
+        api.updateRealtorMessage(realtorId, messageId)
+            .then(response => {
+                dispatch({
+                    type: 'UPDATE_MESSAGE',
+                    payload: response
+                })
+
+                setMessageDetail(response)
+                const updatedMessages = state.messages.map(m =>  m.id === response.id ? {...m, read: true} : m)
+                dispatch({
+                    type: 'GET_MESSAGES',
+                    payload: updatedMessages
+                })
+            })
+    }
 
     useEffect(() => {
         getAllRealtors()
-    }, [realtorId])
+    }, [dispatch])
 
     useEffect(() => {
         getARealtor()
-    }, [realtorId])
+    }, [dispatch])
 
     useEffect(() => {
         getAllMessages()
-    }, [realtorId])
+    }, [dispatch])
 
-    const getMessage = (realtorId) => {
-        const messageDetails = messages.find(msg => msg.id === Number(realtorId));
+    useEffect(() => {
+        return history.listen(()  => {
+            dispatch({
+                type: 'LOCATION_CHANGE',
+                location: {realtorId, messageId}
+            })
+        })
+    },[history, realtorId])
+
+    const getMessage = (messageId) => {
+        updateMessageStatus(messageId)
+        const messageDetails = state.messages.find(msg => msg.id === Number(messageId));
         setMessageDetail(messageDetails)
+        setIsMessageDetailsVisible(true)
     }
 
     const onMessageClick = (e) => {
+        history.push('/')
+        history.push(`${realtorId}/messages/${e.currentTarget.id}`)
+        const messageDetails = state.messages.find(msg => msg.id === Number(e.currentTarget.id));
+        const updateUnReadMessages = !messageDetails.read ? {...state.realtor, unread_messages: state.realtor.unread_messages - 1} : {...state.realtor};
+        dispatch({
+            type: 'GET_REALTOR',
+            payload: updateUnReadMessages,
+        });
         getMessage(e.currentTarget.id);
         setCurrentMessage(e.currentTarget.id);
     };
 
     const onMessageClose = () => {
-        setMessageDetail(null)
+        setIsMessageDetailsVisible(false)
     };
 
     const handleFilterHeader = (id) => {
         realtorId = id
         getARealtor()
         getAllMessages()
+        onMessageClose()
     }
 
     return (
-        <Fragment>
+        <div>
             <Header
-                realtors={realtors}
-                realtor={realtor}
-                unReadMessage={realtor.unread_messages}
+                realtors={state.realtors}
+                realtor={state.realtor}
+                unReadMessage={state.realtor.unread_messages}
                 onChange={handleFilterHeader}
+                history={history}
             />
 
             <div className={styles.messagesContainer}>
                 <MessagesList
-                    messages={messages}
+                    messages={state.messages}
                     onClick={onMessageClick}
                     currentMessageId={currentMessage}
                 />
                 
-                {messageDetail && <MessageDetails message={messageDetail} onClose={onMessageClose} isCollapse={!!currentMessage} />}
+                {isMessageDetailsVisible  && <MessageDetails message={messageDetails} realtorId={realtorId} onClose={onMessageClose} isCollapse={!!currentMessage} />}
             </div>
 
-        </Fragment>
+        </div>
     )
 }
 
-export default MailingBox
+export default MailingBox;

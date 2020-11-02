@@ -1,17 +1,29 @@
 .container {
   display: flex;
   flex-direction: column;
-  flex: 0 1 100%;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  //flex: 0 1 100%;
+  flex: 1;
   @media screen and (min-width: 1024px) {
-    flex: 1;
+    //flex: 1;
+    flex: 0 1 100%;
   }
 }
 
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 .unRead {
-  color: #696969;
+  .title,
+  .textContainer {
+    color: #696969;
+  }
+}
+
+.time {
+  color: #178aee;
 }
 
 .item {

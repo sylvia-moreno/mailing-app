@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Logo from './logo/logo'
-import Menu from './menu/menu'
+import Navigation from './navigation/navigation'
 import Counter from './counter/counter'
 
 import styles from './header.module.scss'
@@ -11,17 +11,18 @@ const Header = ({
   realtor,
   unReadMessage,
   onChange,
+  history,
 }) => {
     return (
-        <div className={styles.container}>
+        <header className={styles.container} role="banner">
             <div className={styles.left}>
                 <Logo />
                 <Counter nbOfMessages={unReadMessage} />
             </div>
             <div className={styles.rigth}>
-                <Menu realtors={realtors} realtor={realtor} onChange={onChange} />
+                <Navigation realtors={realtors} realtor={realtor} onChange={onChange} history={history}/>
             </div>
-        </div>
+        </header>
 
 
     )

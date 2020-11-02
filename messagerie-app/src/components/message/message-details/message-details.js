@@ -1,6 +1,6 @@
 import React from 'react'
 import cx from "classnames";
-
+import moment from 'moment';
 import IconMessage from '../icon-message/icon-message';
 
 import styles from './message-details.module.scss'
@@ -10,41 +10,53 @@ const MessageDetails = ({message, onClose, isCollapse}) => {
         contact,
         read,
         type,
-        body
+        body,
+        date,
     } = message;
+    const textDateDay = moment(date).format('DD MMMM');
+    const textDateHours = moment(date).format('HH:mm');
 
     return (
-        <div className={cx(styles.container, {[styles.collapse]: isCollapse })}>
+        <main role="main" className={cx(styles.container, {[styles.collapse]: isCollapse })}>
+            <article>
+                <div className={styles.flexRight}>
+                    <button
+                        type="button"
+                        onClick={onClose}
+                    >
+                        <i className="mypro-icon mypro-icon-cross"></i>
+                    </button>
+                </div>
+                <header className={cx(styles.subContainer, styles.header)}>
+                    <div className={styles.flexRow}>
+                        <span className={styles.icon}>
+                            <IconMessage type={type} unread={read}/>
+                        </span>
+                        <h2 className={styles.nameHeader}>{contact.firstname} {contact.lastname}</h2>
+                    </div>
+                    <div>
+                        <dl>
+                            <dt>Email</dt>
+                            <dd><a href={`mailto:${contact.email}`}>{contact.email}</a></dd>
+                        </dl>
+                    </div>
+                    <div>
+                        <dl>
+                            <dt>Téléphone</dt>
+                            <dd><a href={`tel:${contact.phone}`}>{contact.phone}</a></dd>
 
-            <button
-                type="button"
-                onClick={onClose}
-            >
-                <i className="mypro-icon mypro-icon-cross"></i>
-            </button>
-            <div className={cx(styles.subContainer, styles.header)}>
-                <IconMessage type={type} unread={!read}/>
-                <div>
-                    <h2 className="fullname">
-                        {contact.firstname} {contact.lastname}
-                    </h2>
-                    <div>
-                        <p>Email</p>
-                        <p>{contact.email}</p>
+                        </dl>
                     </div>
+                </header>
+                <section className={cx(styles.subContainer, styles.body)}>
                     <div>
-                        <p>Téléphone</p>
-                        <p>{contact.phone}</p>
+                        <h3 className={styles.nameContainer}>{contact.firstname} {contact.lastname}</h3>
+                        <span className={styles.date}>{textDateDay} à {textDateHours}</span>
+                        <p>{body}</p>
                     </div>
-                </div>
-            </div>
-            <div className={cx(styles.subContainer, styles.body)}>
-                <div>
-                    <p>{contact.firstname} {contact.lastname}</p>
-                    <p>{body}</p>
-                </div>
-            </div>
-        </div>
+                </section>
+            </article>
+        </main>
     )
 }
 
